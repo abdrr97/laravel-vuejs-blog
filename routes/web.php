@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function ()
 {
     return view('welcome');
@@ -21,5 +22,8 @@ Route::get('/', function ()
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('{slug}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// handeled by vuejs router 
+Route::get('{slug}', function ()
+{
+    return view('welcome');
+});

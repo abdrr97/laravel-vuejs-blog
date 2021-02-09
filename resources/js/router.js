@@ -4,13 +4,18 @@ import Router from "vue-router";
 Vue.use(Router);
 
 // components
-import User from "./components/User/User.vue"
+import Home from "./components/pages/Home.vue"
+import Tags from "./components/pages/Tags.vue"
 
 const routes = [
     {
-        path: '/vue-router',
-        component: User,
-    }
+        path: '/',
+        component: Home,
+    },
+    {
+        path: '/tags',
+        component: Tags,
+    },
 ]
 
 

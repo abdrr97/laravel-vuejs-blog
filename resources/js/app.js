@@ -2,16 +2,16 @@ require('./bootstrap');
 
 import Vue from "vue";
 import router from "./router";
-// import User from "./components/User/User.vue"
 
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
+
+Vue.use(ViewUI);
 
 Vue.component('app', require('./components/App.vue').default);
 
 const app = new Vue({
     el: '#app',
-    // components: {
-    //     User
-    // },
     router
 });
 
