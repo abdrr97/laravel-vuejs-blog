@@ -55,7 +55,7 @@
 export default {
   components: {},
   mounted() {
-    console.log("Component mounted.");
+    console.log("App Component mounted.");
   },
 };
 </script>

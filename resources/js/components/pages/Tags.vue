@@ -7,135 +7,74 @@
         <div
           class="_1adminOverveiw_table_recent _box_shadow _border_radious _mar_b30 _p20"
         >
-          <p class="_title0">Recent Post Table</p>
-
+          <p class="_title0">
+            Tags
+            <Button size="small" type="primary" @click="modal = true">
+              <Icon type="md-add" /> Create
+            </Button>
+          </p>
+          <Modal
+            v-model="modal"
+            title="Create a new Tag"
+            :closable="false"
+            :mask-closable="false"
+          >
+            <div slot="footer">
+              <Button size="small" type="default" @click="modal = false">
+                Close
+              </Button>
+              <Button size="small" type="primary"> Create </Button>
+            </div>
+          </Modal>
           <div class="_overflow _table_div">
             <table class="_table">
               <!-- TABLE TITLE -->
               <tr>
-                <th>Date</th>
-                <th>Subject</th>
-                <th>Category</th>
-                <th>Report</th>
+                <th>ID</th>
+                <th>Name</th>
                 <th>Action</th>
               </tr>
               <!-- TABLE TITLE -->
 
               <!-- ITEMS -->
               <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
+                <td>1</td>
+                <td class="_table_name">Tag Name</td>
                 <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
+                  <Button size="small" type="error">Delete</Button>
+                  <Button size="small" type="warning">Edit</Button>
                 </td>
               </tr>
               <!-- ITEMS -->
             </table>
           </div>
         </div>
-        <Page :total="100" />
       </div>
     </div>
   </div>
 </template>
 
+
+<script>
+export default {
+  name: "Home",
+  props: ["propExample"],
+  created() {
+    // # code here
+  },
+  mounted() {
+    // # code here
+  },
+  data() {
+    return {
+      // # code here
+      modal: false,
+    };
+  },
+  methods: {
+    methodExample() {
+      // # code here
+    },
+  },
+};
+</script>
