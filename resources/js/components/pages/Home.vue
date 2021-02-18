@@ -102,98 +102,9 @@
                 </td>
               </tr>
               <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
-
-              <!-- ITEMS -->
-              <tr>
-                <td>25-05-19</td>
-                <td class="_table_name">
-                  who have experience in leather garment business
-                </td>
-                <td>people</td>
-                <td>03</td>
-                <td>
-                  <button class="_btn _action_btn view_btn1" type="button">
-                    View
-                  </button>
-                  <button class="_btn _action_btn edit_btn1" type="button">
-                    Edit
-                  </button>
-                  <button class="_btn _action_btn make_btn1" type="button">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-              <!-- ITEMS -->
             </table>
           </div>
         </div>
-        <Page :total="100" />
       </div>
     </div>
   </div>

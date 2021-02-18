@@ -13,7 +13,6 @@
           <!-- <img class="_1side_menu_img" src="/pic.png" alt="" title=""> -->
           <p class="_1side_menu_name">Admin</p>
         </div>
-
         <!--~~~ MENU LIST ~~~~~~-->
         <div class="_1side_menu_list">
           <ul class="_1side_menu_list_ul">
@@ -59,3 +58,10 @@ export default {
   },
 };
 </script>
+
+
+<style>
+.test {
+  background-color: red !important ;
+}
+</style>

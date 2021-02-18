@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/create_tag', [TestController::class, 'create_tag']);
+Route::post('create_tag/', [TestController::class, 'create_tag']);
