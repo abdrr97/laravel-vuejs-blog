@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::post('create_tag/', [TestController::class, 'create_tag']);
+Route::get('/tags', [AdminController::class, 'index']);
+Route::post('/tags/store', [AdminController::class, 'store']);

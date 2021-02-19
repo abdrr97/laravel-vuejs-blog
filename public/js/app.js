@@ -2078,6 +2078,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
 //
 //
 //
@@ -2137,7 +2148,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Home",
   props: ["propExample"],
-  created: function created() {},
+  created: function created() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _this.isLoading = true;
+              _context.next = 3;
+              return _this._api("GET", "api/tags").then(function (response) {
+                _this.tags = response.data;
+                _this.isLoading = false;
+              })["catch"](function (error) {
+                console.log(error);
+                _this.isLoading = false;
+              });
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
   mounted: function mounted() {// # code here
   },
   data: function data() {
@@ -2145,28 +2181,54 @@ __webpack_require__.r(__webpack_exports__);
       // # code here
       createModal: false,
       isCreating: false,
-      tagName: ""
+      isLoading: false,
+      tagName: "",
+      tags: []
     };
   },
   methods: {
     addTag: function addTag() {
-      var _this = this;
+      var _this2 = this;
 
-      this.isCreating = true;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.isCreating = true;
 
-      if (this.tagName.trim() == "") {
-        this.isCreating = false;
-        return this.error('tag name is required');
-      }
+                if (!(_this2.tagName.trim() == "")) {
+                  _context2.next = 4;
+                  break;
+                }
 
-      this._api("post", "api/create_tag", {
-        tagName: this.tagName
-      }).then(function (response) {
-        console.log(response.data);
-        _this.isCreating = false;
-      })["catch"](function (error) {
-        console.log(error);
-      });
+                _this2.isCreating = false;
+                return _context2.abrupt("return", _this2.error('tag name is required'));
+
+              case 4:
+                _context2.next = 6;
+                return _this2._api("post", "api/tags/store", {
+                  tagName: _this2.tagName
+                }).then(function (response) {
+                  var res = response.data;
+                  _this2.isCreating = false;
+                  _this2.createModal = false;
+
+                  _this2.tags.unshift(res.tag);
+
+                  _this2.success(res.success);
+                })["catch"](function (error) {
+                  _this2.isCreating = false;
+                  return _this2.error(error);
+                });
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   }
 });
@@ -2286,28 +2348,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
-                console.log('axios');
-                _context.next = 4;
+                _context.next = 3;
                 return axios({
                   method: method,
                   url: url,
                   data: data_obj
                 });
 
-              case 4:
+              case 3:
                 return _context.abrupt("return", _context.sent);
 
-              case 7:
-                _context.prev = 7;
+              case 6:
+                _context.prev = 6;
                 _context.t0 = _context["catch"](0);
                 return _context.abrupt("return", _context.t0.response);
 
-              case 10:
+              case 9:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, null, [[0, 6]]);
       }))();
     },
     info: function info(desc) {
@@ -85638,37 +85699,53 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "_overflow _table_div" }, [
-              _c("table", { staticClass: "_table" }, [
-                _vm._m(0),
+            _c(
+              "div",
+              { staticClass: "_overflow _table_div" },
+              [
+                !_vm.isLoading && _vm.tags.length
+                  ? _c(
+                      "table",
+                      { staticClass: "_table" },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _vm._l(_vm.tags, function(tag) {
+                          return _c("tr", { key: tag.id }, [
+                            _c("td", [_vm._v(_vm._s(tag.tag_name))]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "_table_name" }, [
+                              _vm._v(_vm._s(tag.created_at))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              [
+                                _c(
+                                  "Button",
+                                  { attrs: { size: "small", type: "error" } },
+                                  [_vm._v("Delete")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "Button",
+                                  { attrs: { size: "small", type: "warning" } },
+                                  [_vm._v("Edit")]
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        })
+                      ],
+                      2
+                    )
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("tr", [
-                  _c("td", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "_table_name" }, [
-                    _vm._v("Tag Name")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    [
-                      _c(
-                        "Button",
-                        { attrs: { size: "small", type: "error" } },
-                        [_vm._v("Delete")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "Button",
-                        { attrs: { size: "small", type: "warning" } },
-                        [_vm._v("Edit")]
-                      )
-                    ],
-                    1
-                  )
-                ])
-              ])
-            ])
+                _vm.isLoading ? _c("Spin", { attrs: { fix: "" } }) : _vm._e()
+              ],
+              1
+            )
           ],
           1
         )
@@ -85682,9 +85759,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [_vm._v("ID")]),
-      _vm._v(" "),
       _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Created At")]),
       _vm._v(" "),
       _c("th", [_vm._v("Action")])
     ])

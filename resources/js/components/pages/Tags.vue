@@ -26,19 +26,19 @@
                         </div>
                     </Modal>
                     <div class="_overflow _table_div">
-                        <table class="_table">
+                        <table class="_table" v-if="!isLoading && tags.length">
                             <!-- TABLE TITLE -->
                             <tr>
-                                <th>ID</th>
                                 <th>Name</th>
+                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                             <!-- TABLE TITLE -->
 
                             <!-- ITEMS -->
-                            <tr>
-                                <td>1</td>
-                                <td class="_table_name">Tag Name</td>
+                            <tr v-for="tag in tags" :key="tag.id">
+                                <td>{{ tag.tag_name }}</td>
+                                <td class="_table_name">{{ tag.created_at }}</td>
                                 <td>
                                     <Button size="small" type="error">Delete</Button>
                                     <Button size="small" type="warning">Edit</Button>
@@ -46,6 +46,9 @@
                             </tr>
                             <!-- ITEMS -->
                         </table>
+
+                        <Spin fix v-if="isLoading"></Spin>
+
                     </div>
                 </div>
             </div>
@@ -58,8 +61,17 @@
     export default {
         name: "Home",
         props: ["propExample"],
-        created() {
-
+        async created() {
+            this.isLoading = true
+            await this._api("GET", "api/tags")
+                .then((response) => {
+                    this.tags = response.data;
+                    this.isLoading = false
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.isLoading = false
+                })
         },
         mounted() {
             // # code here
@@ -69,29 +81,35 @@
                 // # code here
                 createModal: false,
                 isCreating: false,
+                isLoading: false,
                 tagName: "",
-            };
+                tags: []
+            }
         },
         methods: {
-            addTag() {
-                this.isCreating = true;
+            async addTag() {
+                this.isCreating = true
                 if (this.tagName.trim() == "") {
-                    this.isCreating = false;
+                    this.isCreating = false
                     return this.error('tag name is required')
                 }
 
-                this._api("post", "api/create_tag", {
+                await this._api("post", "api/tags/store", {
                         tagName: this.tagName
                     })
                     .then((response) => {
-                        console.log(response.data);
-                        this.isCreating = false;
+                        let res = response.data
+                        this.isCreating = false
+                        this.createModal = false
+                        this.tags.unshift(res.tag)
+                        this.success(res.success)
                     })
                     .catch((error) => {
-                        console.log(error);
-                    });
+                        this.isCreating = false
+                        return this.error(error)
+                    })
             },
         },
-    };
+    }
 
 </script>

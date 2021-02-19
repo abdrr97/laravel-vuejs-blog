@@ -5,7 +5,6 @@ export default {
     methods: {
         async _api(method, url, data_obj) {
             try {
-                console.log('axios');
                 return await axios({
                     method: method,
                     url: url,
