@@ -2142,9 +2142,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Home",
   props: ["propExample"],
@@ -2156,14 +2153,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _this.isLoading = true;
+              _this.$Loading.start();
+
               _context.next = 3;
               return _this._api("GET", "api/tags").then(function (response) {
                 _this.tags = response.data;
-                _this.isLoading = false;
+
+                _this.$Loading.finish();
               })["catch"](function (error) {
                 console.log(error);
-                _this.isLoading = false;
+
+                _this.$Loading.finish();
               });
 
             case 3:
@@ -2181,9 +2181,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // # code here
       createModal: false,
       isCreating: false,
-      isLoading: false,
+      loading: false,
       tagName: "",
-      tags: []
+      tags: [],
+      cols: [{
+        title: 'Tag Name',
+        key: 'tag_name'
+      }, {
+        title: 'Created At',
+        key: 'created_at'
+      }, {
+        title: 'Actions',
+        key: 'actions'
+      }]
     };
   },
   methods: {
@@ -2196,33 +2206,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _this2.isCreating = true;
-
-                if (!(_this2.tagName.trim() == "")) {
-                  _context2.next = 4;
-                  break;
-                }
-
-                _this2.isCreating = false;
-                return _context2.abrupt("return", _this2.error('tag name is required'));
-
-              case 4:
-                _context2.next = 6;
+                _context2.next = 3;
                 return _this2._api("post", "api/tags/store", {
-                  tagName: _this2.tagName
+                  tag_name: _this2.tagName
                 }).then(function (response) {
                   var res = response.data;
                   _this2.isCreating = false;
-                  _this2.createModal = false;
 
-                  _this2.tags.unshift(res.tag);
+                  if (response.status == 200) {
+                    _this2.createModal = false;
+                    _this2.tagName = '';
 
-                  _this2.success(res.success);
-                })["catch"](function (error) {
+                    _this2.tags.unshift(res.tag);
+
+                    _this2.success(res.success);
+                  } else {
+                    return _this2.error(res.errors.tag_name);
+                  }
+                })["catch"](function (e) {
                   _this2.isCreating = false;
-                  return _this2.error(error);
+                  return _this2.error(e.errors);
                 });
 
-              case 6:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -2337,6 +2343,11 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  created: function created() {
+    this.$Loading.config({
+      height: 6
+    });
+  },
   data: function data() {
     return {};
   },
@@ -2371,29 +2382,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 6]]);
       }))();
     },
-    info: function info(desc) {
-      var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Hey ";
+    info: function info(desc, title) {
       this.$Notice.info({
         title: title,
         desc: desc
       });
     },
-    success: function success(desc) {
-      var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Hey ";
+    success: function success(desc, title) {
       this.$Notice.success({
         title: title,
         desc: desc
       });
     },
-    warning: function warning(desc) {
-      var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Hey ";
+    warning: function warning(desc, title) {
       this.$Notice.warning({
         title: title,
         desc: desc
       });
     },
-    error: function error(desc) {
-      var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Hey ";
+    error: function error(desc, title) {
       this.$Notice.error({
         title: title,
         desc: desc
@@ -2401,7 +2408,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   }, "error", function error() {
     var desc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Something went wrong! Please try again";
-    var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "Hey ";
+    var title = arguments.length > 1 ? arguments[1] : undefined;
     this.$Notice.error({
       title: title,
       desc: desc
@@ -85699,53 +85706,54 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "_overflow _table_div" },
-              [
-                !_vm.isLoading && _vm.tags.length
-                  ? _c(
-                      "table",
-                      { staticClass: "_table" },
-                      [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _vm._l(_vm.tags, function(tag) {
-                          return _c("tr", { key: tag.id }, [
-                            _c("td", [_vm._v(_vm._s(tag.tag_name))]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "_table_name" }, [
-                              _vm._v(_vm._s(tag.created_at))
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c(
-                                  "Button",
-                                  { attrs: { size: "small", type: "error" } },
-                                  [_vm._v("Delete")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "Button",
-                                  { attrs: { size: "small", type: "warning" } },
-                                  [_vm._v("Edit")]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        })
-                      ],
-                      2
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.isLoading ? _c("Spin", { attrs: { fix: "" } }) : _vm._e()
-              ],
-              1
-            )
+            _c("div", { staticClass: "_overflow _table_div" }, [
+              !_vm.loading && _vm.tags.length
+                ? _c(
+                    "table",
+                    { staticClass: "_table" },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _vm._l(_vm.tags, function(tag) {
+                        return _c("tr", { key: tag.id }, [
+                          _c("td", [_vm._v(_vm._s(tag.id))]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "_table_name" }, [
+                            _vm._v(_vm._s(tag.tag_name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("small", [
+                              _vm._v(
+                                _vm._s(new Date(tag.created_at).toDateString())
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "Button",
+                                { attrs: { size: "small", type: "error" } },
+                                [_vm._v("Delete")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "Button",
+                                { attrs: { size: "small", type: "warning" } },
+                                [_vm._v("Edit")]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                : _vm._e()
+            ])
           ],
           1
         )
@@ -85759,6 +85767,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Created At")]),

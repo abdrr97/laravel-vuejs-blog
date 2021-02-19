@@ -1,5 +1,11 @@
 export default {
+    created() {
+        this.$Loading.config({
+            height: 6
+        });
+    },
     data() {
+
         return {};
     },
     methods: {
@@ -14,31 +20,31 @@ export default {
                 return e.response;
             }
         },
-        info(desc, title = "Hey ") {
+        info(desc, title) {
             this.$Notice.info({
                 title: title,
                 desc: desc
             });
         },
-        success(desc, title = "Hey ") {
+        success(desc, title) {
             this.$Notice.success({
                 title: title,
                 desc: desc
             });
         },
-        warning(desc, title = "Hey ") {
+        warning(desc, title) {
             this.$Notice.warning({
                 title: title,
                 desc: desc
             });
         },
-        error(desc, title = "Hey ") {
+        error(desc, title) {
             this.$Notice.error({
                 title: title,
                 desc: desc
             });
         },
-        error(desc = "Something went wrong! Please try again", title = "Hey ") {
+        error(desc = "Something went wrong! Please try again", title) {
             this.$Notice.error({
                 title: title,
                 desc: desc

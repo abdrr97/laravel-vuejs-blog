@@ -19,7 +19,6 @@ class AdminController extends Controller
         return Tag::orderBy('created_at', 'DESC')->get();
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -29,13 +28,21 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         // validation goes here
-        $tag = Tag::create([
-            'tag_name' => $request->tagName
-        ]);
+        $request->validate(
+            [
+                'tag_name' => 'required|unique:tags',
+            ]
+        );
+
+        $tag = Tag::create(
+            [
+                'tag_name' => $request->tag_name,
+            ]
+        );
 
         return response()->json(
             [
-                'success' => 'Tag was created successfully', 'tag' => $tag
+                'success' => 'Tag was created successfully', 'tag' => $tag,
             ],
             200
         );
@@ -50,7 +57,9 @@ class AdminController extends Controller
     public function show(Tag $tag)
     {
         if (!$tag)
+        {
             return response()->json(['not found' => 'Tag Not Found'], 404);
+        }
 
         return AdminResource::wrap($tag);
     }
@@ -67,7 +76,7 @@ class AdminController extends Controller
         // validation goes here
 
         $tag->update([
-            'tag_name' => $request->tagName
+            'tag_name' => $request->tagName,
         ]);
 
         return response()->json(['success' => 'Tag was updated successfully'], 200);

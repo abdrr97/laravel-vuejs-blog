@@ -26,28 +26,25 @@
                         </div>
                     </Modal>
                     <div class="_overflow _table_div">
-                        <table class="_table" v-if="!isLoading && tags.length">
-                            <!-- TABLE TITLE -->
+                        <table class="_table" v-if="!loading && tags.length">
                             <tr>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Created At</th>
                                 <th>Action</th>
                             </tr>
-                            <!-- TABLE TITLE -->
-
-                            <!-- ITEMS -->
                             <tr v-for="tag in tags" :key="tag.id">
-                                <td>{{ tag.tag_name }}</td>
-                                <td class="_table_name">{{ tag.created_at }}</td>
+                                <td>{{ tag.id }}</td>
+                                <td class="_table_name">{{ tag.tag_name }}</td>
+                                <td><small>{{ new Date(tag.created_at).toDateString() }}</small></td>
                                 <td>
                                     <Button size="small" type="error">Delete</Button>
                                     <Button size="small" type="warning">Edit</Button>
                                 </td>
                             </tr>
-                            <!-- ITEMS -->
                         </table>
 
-                        <Spin fix v-if="isLoading"></Spin>
+                        <!-- <Spin fix v-if="loading"></Spin> -->
 
                     </div>
                 </div>
@@ -62,15 +59,15 @@
         name: "Home",
         props: ["propExample"],
         async created() {
-            this.isLoading = true
+            this.$Loading.start()
             await this._api("GET", "api/tags")
                 .then((response) => {
                     this.tags = response.data;
-                    this.isLoading = false
+                    this.$Loading.finish()
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.isLoading = false
+                    this.$Loading.finish()
                 })
         },
         mounted() {
@@ -81,32 +78,46 @@
                 // # code here
                 createModal: false,
                 isCreating: false,
-                isLoading: false,
+                loading: false,
                 tagName: "",
-                tags: []
+                tags: [],
+                cols: [{
+                        title: 'Tag Name',
+                        key: 'tag_name'
+                    },
+                    {
+                        title: 'Created At',
+                        key: 'created_at'
+                    },
+                    {
+                        title: 'Actions',
+                        key: 'actions'
+                    }
+                ],
             }
         },
         methods: {
             async addTag() {
                 this.isCreating = true
-                if (this.tagName.trim() == "") {
-                    this.isCreating = false
-                    return this.error('tag name is required')
-                }
 
                 await this._api("post", "api/tags/store", {
-                        tagName: this.tagName
+                        tag_name: this.tagName
                     })
                     .then((response) => {
                         let res = response.data
                         this.isCreating = false
-                        this.createModal = false
-                        this.tags.unshift(res.tag)
-                        this.success(res.success)
+                        if (response.status == 200) {
+                            this.createModal = false
+                            this.tagName = ''
+                            this.tags.unshift(res.tag)
+                            this.success(res.success)
+                        } else {
+                            return this.error(res.errors.tag_name);
+                        }
                     })
-                    .catch((error) => {
+                    .catch((e) => {
                         this.isCreating = false
-                        return this.error(error)
+                        return this.error(e.errors)
                     })
             },
         },
